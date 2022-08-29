@@ -7,6 +7,7 @@ urlpatterns = [
     path('', include('profiles.urls')),
     path('questions/', include('questions.urls')),
     path('answers/', include('answers.urls')),
-
+    path('upvotes/', include('upvotes.urls')),
+    
     path('api-auth/', include('rest_framework.urls')),
 ]

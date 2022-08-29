@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'profiles',
     'questions',
     'answers',
+    'upvotes',
 ]
 
 MIDDLEWARE = [

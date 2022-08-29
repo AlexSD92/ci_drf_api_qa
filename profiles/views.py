@@ -5,11 +5,14 @@ from .serializers import ProfileSerializer
 from django.http import Http404
 from rest_framework import status
 from ci_drf_api_qa.permissions import IsOwner
+from django.db.models import Count
 
 
 class ListProfile(APIView):
     def get(self, request):
-        profiles = Profile.objects.all()
+        profiles = Profile.objects.annotate(
+            questions_count=Count('owner__question', distinct=True)
+        )
         serializer = ProfileSerializer(profiles, many=True, context={'request': request})
         return Response(serializer.data)
 

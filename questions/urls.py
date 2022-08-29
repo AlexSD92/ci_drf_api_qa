@@ -3,5 +3,5 @@ from questions import views
 
 
 urlpatterns = [
-
+    path('', views.ListQuestion.as_view())
 ]

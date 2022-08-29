@@ -13,4 +13,4 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'owner', 'question', 'detail', 'profile_id', 'created', 'updated']
+        fields = ['id', 'owner', 'question', 'detail', 'profile_id', 'created', 'updated', 'is_owner']

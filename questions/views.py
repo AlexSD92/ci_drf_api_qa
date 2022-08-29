@@ -30,3 +30,34 @@ class ListQuestion(APIView):
         return Response(
             serializer.errors, status=status.HTTP_400_BAD_REQUEST
         )
+
+class DetailQuestion(APIView):
+    serializer_class = QuestionSerializer
+    permission_classes = [IsOwner]
+    def get_object(self, pk):
+        try: 
+            question = Question.objects.get(pk=pk)
+            self.check_object_permissions(self.request, question)
+            return question
+        except Question.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        question = self.get_object(pk)
+        serializer = QuestionSerializer(question, context={'request': request})
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        question = self.get_object(pk)
+        serializer = QuestionSerializer(question, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        question = self.get_object(pk)
+        question.delete()
+        return Response(
+            status=status.HTTP_204_NO_CONTENT
+        )
